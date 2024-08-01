@@ -9,7 +9,7 @@ import GameButton from "../assets/GameButton.png";
 export default function Navbar() {
   const [toggle, setToggle] = useState(false);
   const [start, setStart] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(12);
+  const [timeLeft, setTimeLeft] = useState(120);
 
   const handleStartGame = () => {
     setToggle(true);
@@ -28,6 +28,15 @@ export default function Navbar() {
         return prev - 1;
       });
     }, 1000);
+  };
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(
+      2,
+      "0"
+    )}`;
   };
 
   return (
@@ -171,7 +180,7 @@ export default function Navbar() {
             </div>
           </div>
           <button className="start-btn" onClick={handleRealStartGame}>
-            {start === true && timeLeft > 0 ? timeLeft : "START THE GAME"}
+            {start && timeLeft > 0 ? formatTime(timeLeft) : "START THE GAME"}
           </button>
         </div>
       )}
