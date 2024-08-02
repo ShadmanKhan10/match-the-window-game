@@ -160,6 +160,7 @@
   width: 25vw;
   height: 5vw;
   font-size: 2vw;
+  font-family: "Digital-7";
   border-radius: 2vw;
   border: 0.2vw solid #016938;
   /* background-color: #6cc04a33; */
@@ -183,13 +184,24 @@
   justify-content: center;
   align-items: center;
 }
+.grid-container-blur {
+  height: 33vw;
+  width: 65vw;
+  /* border: 2px solid black; */
+  position: absolute;
+  top: 18vw;
+  left: 20vw;
+  display: grid;
+  grid-template-rows: 10vw 10vw 10vw;
+  grid-template-columns: 15vw 15vw 15vw 15vw;
+  grid-gap: 1vw;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.5;
+}
 .game-heading-div {
   display: inline-block;
   position: absolute;
   top: 11vw;
   left: 34vw;
-}
-
-.load-game-logo {
-  opacity: 0.5;
 }

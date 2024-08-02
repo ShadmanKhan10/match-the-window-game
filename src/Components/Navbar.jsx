@@ -5,11 +5,97 @@ import NavLogoRight from "../assets/NavLogoRight.png";
 import MsgIcon from "../assets/MsgIcon.png";
 import UserIcon from "../assets/UserIcon.png";
 import GameButton from "../assets/GameButton.png";
+import SpotLight from "../assets/SpotLight.png";
+import Cost from "../assets/Cost.png";
+import Freshdesk from "../assets/Freshdesk.png";
+import Freshsales from "../assets/Freshsales.png";
+import Managed from "../assets/Managed.png";
+import Freshservice from "../assets/Freshservice.png";
 
 export default function Navbar() {
   const [toggle, setToggle] = useState(false);
   const [start, setStart] = useState(false);
   const [timeLeft, setTimeLeft] = useState(120);
+  const [prev, setPrev] = useState("");
+  const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
+  const [open4, setOpen4] = useState(false);
+  const [shuffledItmes, setShuffledItmes] = useState([]);
+  // const [prevOpen, setPrevOpen] = useState(true);
+
+  const items = [
+    {
+      id: 1,
+      name: "Spotlight",
+      src: SpotLight,
+    },
+    {
+      id: 2,
+      name: "Managed",
+      src: Managed,
+    },
+    {
+      id: 3,
+      name: "Freshdesk",
+      src: Freshdesk,
+    },
+    {
+      id: 4,
+      name: "Cost",
+      src: Cost,
+    },
+    {
+      id: 5,
+      name: "Freshsales",
+      src: Freshsales,
+    },
+    {
+      id: 6,
+      name: "Freshservice",
+      src: Freshservice,
+    },
+    {
+      id: 7,
+      name: "Spotlight",
+      src: SpotLight,
+    },
+    {
+      id: 8,
+      name: "Managed",
+      src: Managed,
+    },
+    {
+      id: 9,
+      name: "Freshdesk",
+      src: Freshdesk,
+    },
+    {
+      id: 10,
+      name: "Cost",
+      src: Cost,
+    },
+    {
+      id: 11,
+      name: "Freshsales",
+      src: Freshsales,
+    },
+    {
+      id: 12,
+      name: "Freshservice",
+      src: Freshservice,
+    },
+  ];
+
+  // const shuffledItems = items.sort(() => Math.random() - 0.5);
+  // useEffect(() => {
+  //   setShuffled(shuffledItems);
+  // }, []);
+
+  const shuffled = items.sort(() => Math.random() - 0.5);
+  useEffect(() => {
+    setShuffledItmes(shuffled);
+  }, []);
 
   const handleStartGame = () => {
     setToggle(true);
@@ -18,12 +104,13 @@ export default function Navbar() {
   const handleRealStartGame = () => {
     // setToggle(false);
     setStart(true);
+    console.log(start);
     const a = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev === 1) {
           clearInterval(a);
           setStart(false);
-          setTimeLeft(12);
+          setTimeLeft(120);
         }
         return prev - 1;
       });
@@ -38,6 +125,80 @@ export default function Navbar() {
       "0"
     )}`;
   };
+
+  const handleClickOpen = (data) => {
+    setOpen(true);
+    if (prev === "") {
+      setOpen(true);
+      setPrev(data);
+    } else if (prev === data) {
+      setOpen(true);
+      setPrev("");
+    } else {
+      setTimeout(() => {
+        setOpen(false);
+      }, 1000);
+    }
+  };
+
+  const handleClickOpen2 = (data) => {
+    setOpen2(true);
+    if (prev === "") {
+      setOpen2(true);
+      setPrev(data);
+    } else if (prev === data) {
+      setOpen2(true);
+      setPrev("");
+    } else {
+      setTimeout(() => {
+        setOpen2(false);
+      }, 1000);
+    }
+  };
+  const handleClickOpen3 = (data) => {
+    setOpen3(true);
+    // if (prev === data || prev === "") {
+    //   setOpen3(true);
+    //   setPrev(data);
+    // } else {
+    //   setTimeout(() => {
+    //     setOpen3(false);
+    //   }, 1000);
+
+    //   setPrev("");
+    // }
+
+    if (prev === "") {
+      setOpen3(true);
+      setPrev(data);
+    } else if (prev === data) {
+      setOpen3(true);
+      setPrev("");
+    } else {
+      setTimeout(() => {
+        setOpen3(false);
+      }, 1000);
+    }
+
+    // setPrev("");
+  };
+  const handleClickOpen4 = (data) => {
+    setOpen4(true);
+    if (prev === "") {
+      setOpen4(true);
+      setPrev(data);
+    } else if (prev === data) {
+      setOpen4(true);
+      setPrev("");
+    } else {
+      setTimeout(() => {
+        setOpen4(false);
+      }, 1000);
+    }
+  };
+  // const handleGridClick = () => {
+
+  // }
 
   return (
     <div className="container">
@@ -93,91 +254,25 @@ export default function Navbar() {
           <div className="game-heading-div">
             <h1 className="main-heading-text1">TECHVOLVE RECALL</h1>
           </div>
-          <div className="grid-container">
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
-            <div className="grid-item">
-              <img
-                src={GameButton}
-                alt="logo"
-                className={start === true ? "game-logo" : "load-game-logo"}
-              />
-            </div>
+          <div
+            className={
+              start === true ? "grid-container" : "grid-container-blur"
+            }
+            // onClick={handleGridClick}
+          >
+            {shuffledItmes.map((item, idx) => (
+              <div key={idx} className="grid-item">
+                {start === false ? (
+                  <img src={GameButton} alt="logo" className="game-logo" />
+                ) : (
+                  <img
+                    src={start === false ? GameButton : item.src}
+                    alt="logo"
+                    className="game-logo"
+                  />
+                )}
+              </div>
+            ))}
           </div>
           <button className="start-btn" onClick={handleRealStartGame}>
             {start && timeLeft > 0 ? formatTime(timeLeft) : "START THE GAME"}
