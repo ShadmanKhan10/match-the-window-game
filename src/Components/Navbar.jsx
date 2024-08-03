@@ -16,81 +16,90 @@ export default function Navbar() {
   const [toggle, setToggle] = useState(false);
   const [start, setStart] = useState(false);
   const [timeLeft, setTimeLeft] = useState(120);
-  const [prev, setPrev] = useState("");
-  const [open, setOpen] = useState(false);
-  const [open2, setOpen2] = useState(false);
-  const [open3, setOpen3] = useState(false);
-  const [open4, setOpen4] = useState(false);
   const [shuffledItmes, setShuffledItmes] = useState([]);
-  // const [prevOpen, setPrevOpen] = useState(true);
+  const [flag, setFlag] = useState(false);
+  const [currImage, setCurrImage] = useState();
+  const [prevImage, setPrevImage] = useState();
+  const [buttonStart, setButtonStart] = useState(false);
+  const [name1, setName1] = useState();
+  const [name2, setName2] = useState();
+  const [openImage, setOpenImage] = useState(false);
+  const [index1, setIndex1] = useState();
 
   const items = [
     {
       id: 1,
+      flag: flag,
       name: "Spotlight",
       src: SpotLight,
     },
     {
       id: 2,
+      flag: flag,
       name: "Managed",
       src: Managed,
     },
     {
       id: 3,
+      flag: flag,
       name: "Freshdesk",
       src: Freshdesk,
     },
     {
       id: 4,
+      flag: flag,
       name: "Cost",
       src: Cost,
     },
     {
       id: 5,
+      flag: flag,
       name: "Freshsales",
       src: Freshsales,
     },
     {
       id: 6,
+      flag: flag,
       name: "Freshservice",
       src: Freshservice,
     },
     {
       id: 7,
+      flag: flag,
       name: "Spotlight",
       src: SpotLight,
     },
     {
       id: 8,
+      flag: flag,
       name: "Managed",
       src: Managed,
     },
     {
       id: 9,
+      flag: flag,
       name: "Freshdesk",
       src: Freshdesk,
     },
     {
       id: 10,
+      flag: flag,
       name: "Cost",
       src: Cost,
     },
     {
       id: 11,
+      flag: flag,
       name: "Freshsales",
       src: Freshsales,
     },
     {
       id: 12,
+      flag: flag,
       name: "Freshservice",
       src: Freshservice,
     },
   ];
-
-  // const shuffledItems = items.sort(() => Math.random() - 0.5);
-  // useEffect(() => {
-  //   setShuffled(shuffledItems);
-  // }, []);
 
   const shuffled = items.sort(() => Math.random() - 0.5);
   useEffect(() => {
@@ -102,8 +111,8 @@ export default function Navbar() {
   };
 
   const handleRealStartGame = () => {
-    // setToggle(false);
     setStart(true);
+    setButtonStart(true);
     console.log(start);
     const a = setInterval(() => {
       setTimeLeft((prev) => {
@@ -126,79 +135,44 @@ export default function Navbar() {
     )}`;
   };
 
-  const handleClickOpen = (data) => {
-    setOpen(true);
-    if (prev === "") {
-      setOpen(true);
-      setPrev(data);
-    } else if (prev === data) {
-      setOpen(true);
-      setPrev("");
-    } else {
-      setTimeout(() => {
-        setOpen(false);
-      }, 1000);
-    }
+  const handleImageClick = (index, name) => {
+    console.log("inside first handle");
+    setOpenImage(true);
+    setIndex1(index);
+    setName1(name);
+    console.log(name1);
+    shuffledItmes[index].flag = true;
+
+    setCurrImage(shuffledItmes[index].name);
+    console.log(currImage);
   };
 
-  const handleClickOpen2 = (data) => {
-    setOpen2(true);
-    if (prev === "") {
-      setOpen2(true);
-      setPrev(data);
-    } else if (prev === data) {
-      setOpen2(true);
-      setPrev("");
+  const handleImage2Click = (index, name) => {
+    console.log("inside second handle");
+    shuffledItmes[index].flag = true;
+    setName2(name);
+    console.log(name2);
+    if (name1 === name2) {
+      console.log("matched");
+      console.log(name1);
+      console.log(name2);
+      shuffledItmes[index].flag = true;
+      shuffledItmes[index1].flag = true;
+      setName1("");
+      setName2("");
+      setOpenImage(false);
     } else {
+      console.log("not matched");
       setTimeout(() => {
-        setOpen2(false);
+        shuffledItmes[index].flag = false;
+        shuffledItmes[index1].flag = false;
+        setOpenImage(false);
+        setName1("");
+        setName2("");
       }, 1000);
     }
+    // console.log(name);
   };
-  const handleClickOpen3 = (data) => {
-    setOpen3(true);
-    // if (prev === data || prev === "") {
-    //   setOpen3(true);
-    //   setPrev(data);
-    // } else {
-    //   setTimeout(() => {
-    //     setOpen3(false);
-    //   }, 1000);
-
-    //   setPrev("");
-    // }
-
-    if (prev === "") {
-      setOpen3(true);
-      setPrev(data);
-    } else if (prev === data) {
-      setOpen3(true);
-      setPrev("");
-    } else {
-      setTimeout(() => {
-        setOpen3(false);
-      }, 1000);
-    }
-
-    // setPrev("");
-  };
-  const handleClickOpen4 = (data) => {
-    setOpen4(true);
-    if (prev === "") {
-      setOpen4(true);
-      setPrev(data);
-    } else if (prev === data) {
-      setOpen4(true);
-      setPrev("");
-    } else {
-      setTimeout(() => {
-        setOpen4(false);
-      }, 1000);
-    }
-  };
-  // const handleGridClick = () => {
-
-  // }
 
   return (
     <div className="container">
@@ -258,24 +232,32 @@ export default function Navbar() {
             className={
               start === true ? "grid-container" : "grid-container-blur"
             }
-            // onClick={handleGridClick}
           >
             {shuffledItmes.map((item, idx) => (
-              <div key={idx} className="grid-item">
-                {start === false ? (
-                  <img src={GameButton} alt="logo" className="game-logo" />
-                ) : (
-                  <img
-                    src={start === false ? GameButton : item.src}
-                    alt="logo"
-                    className="game-logo"
-                  />
-                )}
+              <div
+                key={idx}
+                className="grid-item"
+                onClick={() => {
+                  if (openImage === false) {
+                    handleImageClick(idx, item.name);
+                  } else {
+                    handleImage2Click(idx, item.name);
+                  }
+                }}
+              >
+                <img
+                  src={item.flag === true ? item.src : GameButton}
+                  alt="logo"
+                  className="game-logo"
+                />
               </div>
             ))}
           </div>
           <button className="start-btn" onClick={handleRealStartGame}>
-            {start && timeLeft > 0 ? formatTime(timeLeft) : "START THE GAME"}
+            {/* {start && timeLeft > 0 ? formatTime(timeLeft) : "START THE GAME"} */}
+            {buttonStart && timeLeft > 0
+              ? formatTime(timeLeft)
+              : "START THE GAME"}
           </button>
         </div>
       )}
