@@ -19,12 +19,12 @@ export default function Navbar() {
   const [shuffledItmes, setShuffledItmes] = useState([]);
   const [flag, setFlag] = useState(false);
   const [currImage, setCurrImage] = useState();
-  const [prevImage, setPrevImage] = useState();
+  const [prevId, setPrevId] = useState();
   const [buttonStart, setButtonStart] = useState(false);
   const [name1, setName1] = useState();
   const [name2, setName2] = useState();
   const [openImage, setOpenImage] = useState(false);
-  const [index1, setIndex1] = useState();
+  const [prevIndex, setPrevIndex] = useState();
 
   const items = [
     {
@@ -64,37 +64,37 @@ export default function Navbar() {
       src: Freshservice,
     },
     {
-      id: 7,
+      id: 1,
       flag: flag,
       name: "Spotlight",
       src: SpotLight,
     },
     {
-      id: 8,
+      id: 2,
       flag: flag,
       name: "Managed",
       src: Managed,
     },
     {
-      id: 9,
+      id: 3,
       flag: flag,
       name: "Freshdesk",
       src: Freshdesk,
     },
     {
-      id: 10,
+      id: 4,
       flag: flag,
       name: "Cost",
       src: Cost,
     },
     {
-      id: 11,
+      id: 5,
       flag: flag,
       name: "Freshsales",
       src: Freshsales,
     },
     {
-      id: 12,
+      id: 6,
       flag: flag,
       name: "Freshservice",
       src: Freshservice,
@@ -135,43 +135,73 @@ export default function Navbar() {
     )}`;
   };
 
-  const handleImageClick = (index, name) => {
+  // const handleImageClick = (index, name) => {
+  //   console.log("inside first handle");
+  //   setOpenImage(true);
+  //   setIndex1(index);
+  //   setName1(name);
+  //   console.log(name1);
+  //   shuffledItmes[index].flag = true;
+
+  //   setCurrImage(shuffledItmes[index].name);
+  //   console.log(currImage);
+  // };
+
+  // const handleImage2Click = (index, name) => {
+  //   console.log("inside second handle");
+
+  //   shuffledItmes[index].flag = true;
+  //   setName2(name);
+  //   console.log(name2);
+  //   if (name1 === name2) {
+  //     console.log("matched");
+  //     console.log(name1);
+  //     console.log(name2);
+  //     shuffledItmes[index].flag = true;
+  //     shuffledItmes[index1].flag = true;
+  //     setName1("");
+  //     setName2("");
+  //     setOpenImage(false);
+  //   } else {
+  //     console.log("not matched");
+  //     setTimeout(() => {
+  //       shuffledItmes[index].flag = false;
+  //       shuffledItmes[index1].flag = false;
+  //       setOpenImage(false);
+  //       setName1("");
+  //       setName2("");
+  //     }, 1000);
+  //   }
+  //   // console.log(name);
+  // };
+
+  const handleImageClick = (index, name, id) => {
     console.log("inside first handle");
     setOpenImage(true);
-    setIndex1(index);
-    setName1(name);
-    console.log(name1);
+    console.log(id);
+    setPrevId(id);
+    setPrevIndex(index);
     shuffledItmes[index].flag = true;
-
-    setCurrImage(shuffledItmes[index].name);
-    console.log(currImage);
   };
 
-  const handleImage2Click = (index, name) => {
-    console.log("inside second handle");
+  const handleImage2Click = (index, name, id) => {
+    shuffledItmes[prevIndex].flag = true;
     shuffledItmes[index].flag = true;
-    setName2(name);
-    console.log(name2);
-    if (name1 === name2) {
+    if (prevId === id) {
       console.log("matched");
-      console.log(name1);
-      console.log(name2);
+      shuffledItmes[prevIndex].flag = true;
       shuffledItmes[index].flag = true;
-      shuffledItmes[index1].flag = true;
-      setName1("");
-      setName2("");
       setOpenImage(false);
     } else {
       console.log("not matched");
       setTimeout(() => {
+        shuffledItmes[prevIndex].flag = false;
         shuffledItmes[index].flag = false;
-        shuffledItmes[index1].flag = false;
         setOpenImage(false);
-        setName1("");
-        setName2("");
       }, 1000);
+
+      setOpenImage(false);
     }
-    // console.log(name);
   };
 
   return (
@@ -239,9 +269,9 @@ export default function Navbar() {
                 className="grid-item"
                 onClick={() => {
                   if (openImage === false) {
-                    handleImageClick(idx, item.name);
+                    handleImageClick(idx, item.name, item.id);
                   } else {
-                    handleImage2Click(idx, item.name);
+                    handleImage2Click(idx, item.name, item.id);
                   }
                 }}
               >
