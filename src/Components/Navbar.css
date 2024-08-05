@@ -198,10 +198,24 @@
   justify-content: center;
   align-items: center;
   opacity: 0.5;
+  cursor: not-allowed;
 }
 .game-heading-div {
   display: inline-block;
   position: absolute;
   top: 11vw;
   left: 34vw;
+}
+.game-logo-rotate {
+  animation: mymove 1s;
+}
+
+@keyframes mymove {
+  50% {
+    transform: rotateY(90deg);
+  }
+}
+
+.game-logo {
+  background: none;
 }

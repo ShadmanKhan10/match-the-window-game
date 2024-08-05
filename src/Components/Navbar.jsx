@@ -25,6 +25,7 @@ export default function Navbar() {
   const [name2, setName2] = useState();
   const [openImage, setOpenImage] = useState(false);
   const [prevIndex, setPrevIndex] = useState();
+  const [rotate, setRotate] = useState(false);
 
   const items = [
     {
@@ -32,72 +33,84 @@ export default function Navbar() {
       flag: flag,
       name: "Spotlight",
       src: SpotLight,
+      rotate: false,
     },
     {
       id: 2,
       flag: flag,
       name: "Managed",
       src: Managed,
+      rotate: false,
     },
     {
       id: 3,
       flag: flag,
       name: "Freshdesk",
       src: Freshdesk,
+      rotate: false,
     },
     {
       id: 4,
       flag: flag,
       name: "Cost",
       src: Cost,
+      rotate: false,
     },
     {
       id: 5,
       flag: flag,
       name: "Freshsales",
       src: Freshsales,
+      rotate: false,
     },
     {
       id: 6,
       flag: flag,
       name: "Freshservice",
       src: Freshservice,
+      rotate: false,
     },
     {
       id: 1,
       flag: flag,
       name: "Spotlight",
       src: SpotLight,
+      rotate: false,
     },
     {
       id: 2,
       flag: flag,
       name: "Managed",
       src: Managed,
+      rotate: false,
     },
     {
       id: 3,
       flag: flag,
       name: "Freshdesk",
       src: Freshdesk,
+      rotate: false,
     },
     {
       id: 4,
       flag: flag,
       name: "Cost",
       src: Cost,
+      rotate: false,
     },
     {
       id: 5,
       flag: flag,
       name: "Freshsales",
       src: Freshsales,
+      rotate: false,
     },
     {
       id: 6,
       flag: flag,
       name: "Freshservice",
       src: Freshservice,
+      rotate: false,
     },
   ];
 
@@ -148,18 +161,20 @@ export default function Navbar() {
     setPrevId(id);
     setPrevIndex(index);
     shuffledItmes[index].flag = true;
+    shuffledItmes[index].rotate = true;
   };
 
   const handleImage2Click = (index, name, id) => {
     shuffledItmes[prevIndex].flag = true;
     shuffledItmes[index].flag = true;
+    shuffledItmes[prevIndex].rotate = true;
+    shuffledItmes[index].rotate = true;
     if (prevId === id) {
       console.log("matched");
       shuffledItmes[prevIndex].flag = true;
       shuffledItmes[index].flag = true;
-      // setSize((prev) => {
-      //   return prev - 2;
-      // });
+      shuffledItmes[prevIndex].rotate = true;
+      shuffledItmes[index].rotate = true;
       size.current = size.current + 2;
 
       console.log("Items Remaining", size.current);
@@ -169,11 +184,20 @@ export default function Navbar() {
       setTimeout(() => {
         shuffledItmes[prevIndex].flag = false;
         shuffledItmes[index].flag = false;
+        shuffledItmes[prevIndex].rotate = false;
+        shuffledItmes[index].rotate = false;
         setOpenImage(false);
       }, 1000);
 
       setOpenImage(false);
     }
+  };
+
+  const handleClick = () => {
+    setRotate((prev) => {
+      return prev === true ? false : true;
+    });
+    console.log("image clicked");
   };
 
   return (
@@ -232,7 +256,9 @@ export default function Navbar() {
           </div>
           <div
             className={
-              start === true ? "grid-container" : "grid-container-blur"
+              start === true && size.current != 12
+                ? "grid-container"
+                : "grid-container-blur"
             }
           >
             {shuffledItmes.map((item, idx) => (
@@ -250,7 +276,8 @@ export default function Navbar() {
                 <img
                   src={item.flag === true ? item.src : GameButton}
                   alt="logo"
-                  className="game-logo"
+                  className={item.rotate ? "game-logo-rotate" : "game-logo"}
+                  // onClick={handleClick}
                 />
               </div>
             ))}
