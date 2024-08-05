@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Navbar.css";
 import NavLogoLeft from "../assets/NavLogoLeft.png";
 import NavLogoRight from "../assets/NavLogoRight.png";
@@ -101,6 +101,9 @@ export default function Navbar() {
     },
   ];
 
+  // const [size, setSize] = useState(10);
+  const size = useRef(0);
+
   const shuffled = items.sort(() => Math.random() - 0.5);
   useEffect(() => {
     setShuffledItmes(shuffled);
@@ -120,6 +123,9 @@ export default function Navbar() {
           clearInterval(a);
           setStart(false);
           setTimeLeft(120);
+        } else if (size.current === 12) {
+          console.log("Stop timer");
+          clearInterval(a);
         }
         return prev - 1;
       });
@@ -134,46 +140,6 @@ export default function Navbar() {
       "0"
     )}`;
   };
-
-  // const handleImageClick = (index, name) => {
-  //   console.log("inside first handle");
-  //   setOpenImage(true);
-  //   setIndex1(index);
-  //   setName1(name);
-  //   console.log(name1);
-  //   shuffledItmes[index].flag = true;
-
-  //   setCurrImage(shuffledItmes[index].name);
-  //   console.log(currImage);
-  // };
-
-  // const handleImage2Click = (index, name) => {
-  //   console.log("inside second handle");
-
-  //   shuffledItmes[index].flag = true;
-  //   setName2(name);
-  //   console.log(name2);
-  //   if (name1 === name2) {
-  //     console.log("matched");
-  //     console.log(name1);
-  //     console.log(name2);
-  //     shuffledItmes[index].flag = true;
-  //     shuffledItmes[index1].flag = true;
-  //     setName1("");
-  //     setName2("");
-  //     setOpenImage(false);
-  //   } else {
-  //     console.log("not matched");
-  //     setTimeout(() => {
-  //       shuffledItmes[index].flag = false;
-  //       shuffledItmes[index1].flag = false;
-  //       setOpenImage(false);
-  //       setName1("");
-  //       setName2("");
-  //     }, 1000);
-  //   }
-  //   // console.log(name);
-  // };
 
   const handleImageClick = (index, name, id) => {
     console.log("inside first handle");
@@ -191,6 +157,12 @@ export default function Navbar() {
       console.log("matched");
       shuffledItmes[prevIndex].flag = true;
       shuffledItmes[index].flag = true;
+      // setSize((prev) => {
+      //   return prev - 2;
+      // });
+      size.current = size.current + 2;
+
+      console.log("Items Remaining", size.current);
       setOpenImage(false);
     } else {
       console.log("not matched");
