@@ -11,6 +11,7 @@ import Freshdesk from "../assets/Freshdesk.png";
 import Freshsales from "../assets/Freshsales.png";
 import Managed from "../assets/Managed.png";
 import Freshservice from "../assets/Freshservice.png";
+import axios from "axios";
 
 export default function Navbar() {
   const [toggle, setToggle] = useState(false);
@@ -18,14 +19,16 @@ export default function Navbar() {
   const [timeLeft, setTimeLeft] = useState(120);
   const [shuffledItmes, setShuffledItmes] = useState([]);
   const [flag, setFlag] = useState(false);
-  const [currImage, setCurrImage] = useState();
   const [prevId, setPrevId] = useState();
   const [buttonStart, setButtonStart] = useState(false);
-  const [name1, setName1] = useState();
-  const [name2, setName2] = useState();
   const [openImage, setOpenImage] = useState(false);
   const [prevIndex, setPrevIndex] = useState();
   const [rotate, setRotate] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  //const [userId, setUserId] = useState();
+  const userId = useRef();
+  // const [users, setUsers] = useState([]);
 
   const items = [
     {
@@ -123,7 +126,8 @@ export default function Navbar() {
   }, []);
 
   const handleStartGame = () => {
-    setToggle(true);
+    // setToggle(true);
+    handleSave();
   };
 
   const handleRealStartGame = () => {
@@ -131,12 +135,24 @@ export default function Navbar() {
     setButtonStart(true);
     console.log(start);
     const a = setInterval(() => {
-      setTimeLeft((prev) => {
+      setTimeLeft(async (prev) => {
         if (prev === 1) {
           clearInterval(a);
           setStart(false);
           setTimeLeft(120);
         } else if (size.current === 12) {
+          const response = await axios.put(
+            "http://192.168.1.8:3003/updateusertime",
+            {
+              _id: userId.current,
+              timetaken: timeLeft,
+            }
+          );
+          console.log(timeLeft);
+          if (response.status === 200) {
+            console.log(response);
+          }
+
           console.log("Stop timer");
           clearInterval(a);
         }
@@ -164,7 +180,7 @@ export default function Navbar() {
     shuffledItmes[index].rotate = true;
   };
 
-  const handleImage2Click = (index, name, id) => {
+  const handleImage2Click = async (index, name, id) => {
     shuffledItmes[prevIndex].flag = true;
     shuffledItmes[index].flag = true;
     shuffledItmes[prevIndex].rotate = true;
@@ -200,6 +216,30 @@ export default function Navbar() {
     console.log("image clicked");
   };
 
+  const handleSave = async () => {
+    const newUser = { name, email };
+    try {
+      const response = await axios.post(
+        "http://192.168.1.8:3003/userRegistration",
+        newUser
+      );
+      console.log("User added:", response.data);
+      console.log(response.data.data._id);
+      userId.current = response.data.data._id;
+      console.log(userId.current);
+      if (response.status === 200) {
+        setToggle(true);
+      }
+
+      // setUsers([...users, response.data]);
+    } catch (error) {
+      console.error("Error adding user:", error);
+      if (response.status !== 200) {
+        console.log("Error Registering");
+      }
+    }
+  };
+
   return (
     <div className="container">
       <div className="container-navbar">
@@ -231,11 +271,15 @@ export default function Navbar() {
               type="text"
               placeholder="Enter your name"
               className="input-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <input
               type="text"
               placeholder="Enter your e-mail address"
               className="input-email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="msg-icon-div">

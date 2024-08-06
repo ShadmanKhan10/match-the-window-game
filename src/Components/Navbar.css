@@ -132,9 +132,9 @@
   outline: none;
 }
 .msg-icon-div {
-  height: 4vw;
+  height: 3.5vw;
   width: 4vw;
-  /* border: 2px solid blue; */
+  border-right: 2px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -143,9 +143,9 @@
   left: 29vw;
 }
 .user-icon-div {
-  height: 4vw;
+  height: 3.5vw;
   width: 4vw;
-  /* border: 2px solid blue; */
+  border-right: 2px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -207,7 +207,7 @@
   left: 34vw;
 }
 .game-logo-rotate {
-  animation: mymove 1s;
+  animation: mymove 0.5s;
 }
 
 @keyframes mymove {
