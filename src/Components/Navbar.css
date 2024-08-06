@@ -219,3 +219,16 @@
 .game-logo {
   background: none;
 }
+
+.p-tag-div {
+  position: absolute;
+  top: 60vw;
+  left: 34.7vw;
+  font-family: "DIN-Medium";
+  display: flex;
+  justify-content: center;
+}
+.time-left-text {
+  font-size: 2vw;
+  text-align: center;
+}

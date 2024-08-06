@@ -26,9 +26,8 @@ export default function Navbar() {
   const [rotate, setRotate] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  //const [userId, setUserId] = useState();
   const userId = useRef();
-  // const [users, setUsers] = useState([]);
+  const timeTook = useRef(0);
 
   const items = [
     {
@@ -117,7 +116,6 @@ export default function Navbar() {
     },
   ];
 
-  // const [size, setSize] = useState(10);
   const size = useRef(0);
 
   const shuffled = items.sort(() => Math.random() - 0.5);
@@ -126,39 +124,50 @@ export default function Navbar() {
   }, []);
 
   const handleStartGame = () => {
-    // setToggle(true);
-    handleSave();
+    if (name === "" && email === "") {
+      alert("required");
+      // setToggle(false);
+    } else {
+      handleSave();
+    }
   };
 
   const handleRealStartGame = () => {
+    const time = setInterval(() => {
+      timeTook.current = timeTook.current + 1;
+      console.log("_____________", timeTook.current);
+      if (size.current === 12) {
+        clearInterval(time);
+        console.log("Time taken", timeTook.current);
+      }
+    }, 1000);
+
     setStart(true);
     setButtonStart(true);
     console.log(start);
     const a = setInterval(() => {
-      setTimeLeft(async (prev) => {
+      setTimeLeft((prev) => {
         if (prev === 1) {
           clearInterval(a);
           setStart(false);
           setTimeLeft(120);
         } else if (size.current === 12) {
-          const response = await axios.put(
-            "http://192.168.1.8:3003/updateusertime",
-            {
-              _id: userId.current,
-              timetaken: timeLeft,
-            }
-          );
-          console.log(timeLeft);
-          if (response.status === 200) {
-            console.log(response);
-          }
-
           console.log("Stop timer");
+          sendTime();
           clearInterval(a);
         }
         return prev - 1;
       });
     }, 1000);
+  };
+
+  const sendTime = async () => {
+    console.log("time taken", timeTook.current);
+    const response = await axios.put("http://192.168.1.8:3003/updateusertime", {
+      timetaken: timeTook.current,
+      _id: userId.current,
+    });
+    console.log(response);
   };
 
   const formatTime = (seconds) => {
@@ -242,6 +251,14 @@ export default function Navbar() {
 
   return (
     <div className="container">
+      {size.current === 12 && (
+        <div className="p-tag-div">
+          {" "}
+          <p className="time-left-text">
+            You Completed the game in {timeTook.current} seconds
+          </p>
+        </div>
+      )}
       <div className="container-navbar">
         <div className="logo-container-right">
           {" "}
